@@ -27,8 +27,8 @@ while True:
     #write the current time to the display on eveother cycle
     if ( GPIO.input(25)== True ):
 	led.clear_display()
-       	text="SNAP!" 
-	led.draw_text2(0,0,text,3)
+       	text="infragram!" 
+	led.draw_text2(0,0,text,2)
         led.display()
 	
 	dt = datetime.datetime.now()
