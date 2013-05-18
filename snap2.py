@@ -23,6 +23,7 @@ led.clear_display()
 
 offset = 0 # flips between 0 and 32 for double buffering
 
+ambientText="sensors offline..."
 while True:
     #write the current time to the display on eveother cycle
     if ( GPIO.input(25)== True ):
@@ -36,7 +37,7 @@ while True:
 	filename_prefix=dt.strftime("%Y-%m-%d_%H_%M_%S")
 	filename=filename_superprefix+filename_prefix+"_snap.jpeg"
 	#print filename
-	os.system('fswebcam '+filename)
+	#os.system('fswebcam '+filename)
 
 	time.sleep(1)
 	led.clear_display()
@@ -46,17 +47,21 @@ while True:
         time.sleep(2)
 	#os.system('./Adafruit_DHT 22 4')
 	output=subprocess.check_output(["./Adafruit_DHT", "22","4"]);	
+	matches = re.search("Temp =\s+([0-9.]+)", output)
+	if (matches):
+	    time.sleep(.1)
+	    led.clear_display()
+	    temp=float(matches.group(1))
+	    tempStr=str(temp)
+	    ambientText="temp = "+tempStr+" C"
+	led.draw_text2(0,18,ambientText,1)
+	led.display()
+	time.sleep(2)
 	led.clear_display()
     else:
-	text = "ready."
+	text="ready"
 	led.draw_text2(0,0,text,2)
-	text = "temp=30.2 C; RH=33%"
-	led.draw_text2(0,18,text,1)	
-	led.display()	
-	#output = subprocess.check_output(["./Adafruit_DHT", "2302", "4"]);
-  	#print output       
-
- 
+	led.display() 
     # vertically scroll to switch between buffers
     #for i in range(0,32):
     #    offset = (offset + 1) % 64

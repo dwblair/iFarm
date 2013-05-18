@@ -45,7 +45,7 @@ while True:
 	led.display()
         time.sleep(2)
 	#os.system('./Adafruit_DHT 22 4')
-	output=subprocess.check_output(["./Adafruit_DHT", "22","4"]);	
+	#output=subprocess.check_output(["./Adafruit_DHT", "22","4"]);	
 	led.clear_display()
     else:
 	text = "ready."
